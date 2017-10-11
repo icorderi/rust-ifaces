@@ -1,10 +1,12 @@
 extern crate ifaces;
 
-#[cfg(not(test))]
-fn main () {
-    for iface in
-        ifaces::Interface::get_all().unwrap()
-            .into_iter() {
-                println!("{}\t{:?}\t{:?}", iface.name, iface.kind, iface.addr);
+fn main() {
+    match ifaces::ifaces() {
+        Ok(interfaces) => {
+            for interface in interfaces.into_iter() {
+                println!("Found Interface: {:?}", interface)
             }
+        },
+        Err(_) => println!("Ooops ...")
+    };
 }
